@@ -7,17 +7,9 @@ export default function Preloader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if preloader has already been shown in this session
-    const hasLoadedBefore = sessionStorage.getItem("hsm-preloaded");
-    if (hasLoadedBefore === "true") {
-      setLoading(false);
-      return;
-    }
-
     const timer = setTimeout(() => {
       setLoading(false);
-      sessionStorage.setItem("hsm-preloaded", "true");
-    }, 2800);
+    }, 2400);
 
     return () => clearTimeout(timer);
   }, []);

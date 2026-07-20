@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Preloader from "../shared/Preloader";
+import CustomCursor from "../shared/CustomCursor";
 
 export default function ClientPageLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <CustomCursor />
       <Preloader />
       <Navbar />
       <motion.div
