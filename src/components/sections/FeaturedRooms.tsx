@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Square, Users } from "lucide-react";
 import PremiumImage from "@/components/shared/PremiumImage";
@@ -37,52 +38,43 @@ const FEATURED_ROOMS = [
 ];
 
 export default function FeaturedRooms() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 35 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
+  const headerY = useTransform(scrollYProgress, [0, 0.3], [40, 0]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   return (
-    <section id="rooms" className="py-section-gap bg-surface-container-low">
+    <section ref={sectionRef} id="rooms" className="py-section-gap bg-surface-container-low overflow-hidden">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
-        {/* Title area */}
+        {/* Title area with parallax */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            style={{ y: headerY, opacity: headerOpacity }}
             className="space-y-4"
           >
-            <span className="text-secondary font-sans text-xs uppercase tracking-[0.4em] font-semibold block">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-secondary font-sans text-xs uppercase tracking-[0.4em] font-semibold block"
+            >
               Accommodations
-            </span>
+            </motion.span>
             <h2 className="font-serif text-3xl md:text-5xl text-primary font-bold">
               Suites Crafted for Perfection
             </h2>
           </motion.div>
           
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="shrink-0"
           >
             <Link
@@ -90,26 +82,29 @@ export default function FeaturedRooms() {
               className="group flex items-center gap-2 text-secondary font-sans text-xs uppercase tracking-widest font-semibold border-b border-secondary pb-1 hover:text-primary hover:border-primary transition-all duration-300"
             >
               <span>View All Rooms</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1.5 duration-300" />
             </Link>
           </motion.div>
         </div>
 
-        {/* Rooms Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-gutter"
-        >
-          {FEATURED_ROOMS.map((room) => (
+        {/* Rooms Grid with 3D tilt hover */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          {FEATURED_ROOMS.map((room, idx) => (
             <motion.div
               key={room.slug}
-              variants={cardVariants}
-              className="bg-white rounded-[24px] overflow-hidden luxury-shadow group flex flex-col h-full border border-outline-variant/10 hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl"
+              initial={{ opacity: 0, y: 60, rotateX: 8 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{
+                duration: 0.8,
+                delay: idx * 0.15,
+                ease: [0.16, 1, 0.3, 1] as const,
+              }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="bg-white rounded-[24px] overflow-hidden luxury-shadow group flex flex-col h-full border border-outline-variant/10 transition-shadow duration-500 hover:shadow-2xl"
+              style={{ perspective: "1000px" }}
             >
-              {/* Card Image */}
+              {/* Card Image with overlay reveal */}
               <div className="h-72 w-full overflow-hidden relative">
                 <PremiumImage
                   src={room.image}
@@ -119,13 +114,19 @@ export default function FeaturedRooms() {
                   hoverZoom
                   className="w-full h-full object-cover"
                 />
+                {/* Price tag floating overlay */}
+                <div className="absolute top-5 right-5 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                  <span className="text-secondary font-sans text-sm font-bold">
+                    {formatCurrency(room.price)}<span className="text-xs text-outline font-normal">/nt</span>
+                  </span>
+                </div>
               </div>
 
               {/* Card Body */}
               <div className="p-8 flex flex-col flex-grow justify-between space-y-6">
                 <div className="space-y-4">
                   <div className="flex justify-between items-baseline gap-2">
-                    <h3 className="font-serif text-2xl text-primary font-bold">
+                    <h3 className="font-serif text-2xl text-primary font-bold group-hover:text-secondary transition-colors duration-300">
                       {room.name}
                     </h3>
                     <span className="text-secondary font-sans text-sm font-bold whitespace-nowrap">
@@ -151,26 +152,27 @@ export default function FeaturedRooms() {
                     </span>
                   </div>
 
-                  {/* Buttons */}
+                  {/* Buttons with animated arrow */}
                   <div className="grid grid-cols-2 gap-4">
                     <Link
                       href={`/rooms/${room.slug}`}
-                      className="bg-primary text-white py-3.5 rounded-xl font-sans text-[10px] uppercase tracking-widest font-bold text-center hover:bg-secondary transition-colors duration-300 shadow-sm"
+                      className="group/btn relative bg-primary text-white py-3.5 rounded-xl font-sans text-[10px] uppercase tracking-widest font-bold text-center overflow-hidden hover:bg-secondary transition-colors duration-300 shadow-sm"
                     >
-                      Book Now
+                      <span className="relative z-10">Book Now</span>
                     </Link>
                     <Link
                       href={`/rooms/${room.slug}`}
-                      className="border border-outline-variant text-primary py-3.5 rounded-xl font-sans text-[10px] uppercase tracking-widest font-bold text-center hover:bg-surface-container transition-colors duration-300"
+                      className="group/btn flex items-center justify-center gap-1.5 border border-outline-variant text-primary py-3.5 rounded-xl font-sans text-[10px] uppercase tracking-widest font-bold text-center hover:bg-surface-container hover:border-secondary transition-all duration-300"
                     >
-                      View Details
+                      <span>View Details</span>
+                      <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" />
                     </Link>
                   </div>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
