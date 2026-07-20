@@ -47,7 +47,7 @@ export default async function RoomDetailPage({ params }: PageProps) {
 
   return (
     <ClientPageLayout>
-      <main className="flex-grow mt-20">
+      <main className="flex-grow">
         {/* Dynamic Room Hero */}
         <section className="relative h-[75vh] md:h-[80vh] w-full overflow-hidden bg-primary">
           <PremiumImage
