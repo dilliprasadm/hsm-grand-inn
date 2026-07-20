@@ -16,9 +16,9 @@ export const SITE_CONFIG = {
   },
   navigation: [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
     { name: "Rooms", href: "/rooms" },
     { name: "Gallery", href: "/gallery" },
     { name: "Contact", href: "/contact" },
+    { name: "About Us", href: "/about" },
   ]
 };

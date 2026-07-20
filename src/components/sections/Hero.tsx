@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Phone, MessageSquare, ChevronDown, Sparkles } from "lucide-react";
 import Link from "next/link";
@@ -9,13 +9,27 @@ import { getHighQualityImageUrl } from "@/lib/utils";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (window.innerWidth < 768) return; // Only on desktop
+    const { clientWidth, clientHeight } = e.currentTarget;
+    const x = (e.clientX / clientWidth - 0.5) * 25; // max 25px offset
+    const y = (e.clientY / clientHeight - 0.5) * 25;
+    setMousePos({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 });
+  };
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
   // Parallax transforms
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.25]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -26,20 +40,32 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.5,
+        staggerChildren: 0.15,
+        delayChildren: 0.8, // delay to let preloader finish door opening
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
+    hidden: { opacity: 0, y: 40, filter: "blur(6px)" },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: 1,
+        duration: 1.1,
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
+  };
+
+  const lineRevealVariants = {
+    hidden: { y: "110%", opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1.3,
         ease: [0.16, 1, 0.3, 1] as const,
       },
     },
@@ -56,6 +82,8 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-primary"
     >
       {/* Background Image with parallax + Ken Burns */}
@@ -65,8 +93,13 @@ export default function Hero() {
       >
         <motion.div
           initial={{ scale: 1.15, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2.5, ease: "easeOut" }}
+          animate={{ scale: 1, opacity: 1, x: mousePos.x, y: mousePos.y }}
+          transition={{
+            scale: { duration: 2.5, ease: "easeOut" },
+            opacity: { duration: 2 },
+            x: { type: "spring", stiffness: 70, damping: 22 },
+            y: { type: "spring", stiffness: 70, damping: 22 }
+          }}
           className="w-full h-full bg-cover bg-center"
           style={{
             backgroundImage: `url('${getHighQualityImageUrl("https://lh3.googleusercontent.com/aida-public/AB6AXuDBlsnn5RIo5dqFJoBf1XIFNm_YTJJkGoq37SFJE1lzvOVlqCY5Xae8Mk-nc6WSyUfHPz6zZI-BVbmV70gYkkQejMDVNMfMNinInwrW1ilZknXaBql6_q7Hqd8oLNzRAq9XpnO3WiTJ_sVGDHj-wJuQGksD4aCJtZcVQManA-RPZqwdCvVUyws0xrK9DjBDo1FWfdZOp2XGAhiFaCqKt-4Jl2l07NpifaS6GtIvJSuY8JoZ6T3zy29Oag", 1920)}')`,
@@ -140,23 +173,40 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Animated headline with decorative lines */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-bold leading-[0.95] tracking-tight">
-              Experience Comfort
-              <br />
-              <span className="italic font-normal text-secondary-fixed">
+          {/* Animated headline with overflow line mask reveals */}
+          <div className="space-y-4">
+            <div className="overflow-hidden py-1">
+              <motion.h1
+                variants={lineRevealVariants}
+                className="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-bold leading-[0.95] tracking-tight"
+              >
+                Experience Comfort
+              </motion.h1>
+            </div>
+            
+            <div className="overflow-hidden py-1">
+              <motion.h1
+                variants={lineRevealVariants}
+                className="font-serif text-5xl md:text-7xl lg:text-8xl italic font-normal text-secondary-fixed leading-[0.95] tracking-tight"
+              >
                 &amp; Luxury
-              </span>
-            </h1>
+              </motion.h1>
+            </div>
+
             <motion.div
               variants={lineVariants}
-              className="w-24 h-[2px] bg-gradient-to-r from-transparent via-secondary to-transparent mx-auto origin-center"
+              className="w-24 h-[2px] bg-gradient-to-r from-transparent via-secondary to-transparent mx-auto origin-center mt-4"
             />
-            <p className="font-serif text-xl md:text-2xl text-white/60 font-light italic">
-              in the Heart of Chittoor
-            </p>
-          </motion.div>
+            
+            <div className="overflow-hidden">
+              <motion.p
+                variants={lineRevealVariants}
+                className="font-serif text-xl md:text-2xl text-white/60 font-light italic"
+              >
+                in the Heart of Chittoor
+              </motion.p>
+            </div>
+          </div>
 
           <motion.p
             variants={itemVariants}

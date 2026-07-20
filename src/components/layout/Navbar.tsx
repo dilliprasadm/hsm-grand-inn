@@ -30,9 +30,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] as const }}
+        initial={false}
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-500",
           showTransparent
