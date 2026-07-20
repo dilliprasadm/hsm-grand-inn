@@ -25,6 +25,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const showTransparent = !scrolled && pathname !== "/gallery";
+
   return (
     <>
       <motion.header
@@ -33,17 +35,27 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-500",
-          scrolled
-            ? "bg-surface/95 backdrop-blur-md shadow-[0_8px_30px_rgb(17,28,45,0.08)] py-3"
-            : "bg-transparent py-5"
+          showTransparent
+            ? "bg-transparent py-5"
+            : "bg-surface/95 backdrop-blur-md shadow-[0_8px_30px_rgb(17,28,45,0.08)] py-3"
         )}
       >
         <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop flex justify-between items-center">
           <Link href="/" className="group flex flex-col">
-            <span className="font-serif text-headline-md tracking-tighter text-primary select-none transition-colors duration-300">
+            <span
+              className={cn(
+                "font-serif text-headline-md tracking-tighter select-none transition-colors duration-300",
+                showTransparent ? "text-white" : "text-primary"
+              )}
+            >
               HSM Grand Inn
             </span>
-            <span className="text-[9px] uppercase tracking-[0.35em] text-secondary font-semibold -mt-1 select-none">
+            <span
+              className={cn(
+                "text-[9px] uppercase tracking-[0.35em] font-semibold -mt-1 select-none transition-colors duration-300",
+                showTransparent ? "text-secondary-fixed" : "text-secondary"
+              )}
+            >
               Luxury Hospitality
             </span>
           </Link>
@@ -58,7 +70,11 @@ export default function Navbar() {
                   href={item.href}
                   className={cn(
                     "relative py-1 font-sans text-xs uppercase tracking-widest font-semibold transition-colors duration-300",
-                    isActive ? "text-secondary" : "text-primary hover:text-secondary"
+                    isActive
+                      ? "text-secondary"
+                      : showTransparent
+                      ? "text-white/90 hover:text-secondary"
+                      : "text-primary hover:text-secondary"
                   )}
                 >
                   {item.name}
@@ -78,7 +94,12 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/rooms"
-              className="bg-primary text-white border border-primary px-6 py-2.5 rounded-full font-sans text-xs uppercase tracking-widest font-semibold transition-all duration-300 hover:bg-secondary hover:border-secondary hover:scale-105 active:scale-95 shadow-sm hover:shadow-md"
+              className={cn(
+                "px-6 py-2.5 rounded-full font-sans text-xs uppercase tracking-widest font-semibold transition-all duration-300 border shadow-sm hover:scale-105 active:scale-95",
+                showTransparent
+                  ? "bg-white text-primary border-white hover:bg-secondary hover:text-white hover:border-secondary"
+                  : "bg-primary text-white border-primary hover:bg-secondary hover:border-secondary"
+              )}
             >
               Book Your Stay
             </Link>
@@ -87,7 +108,10 @@ export default function Navbar() {
           {/* Mobile menu trigger */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden p-2 text-primary hover:text-secondary transition-colors focus:outline-none"
+            className={cn(
+              "md:hidden p-2 transition-colors focus:outline-none",
+              showTransparent ? "text-white hover:text-secondary" : "text-primary hover:text-secondary"
+            )}
             aria-label="Open navigation menu"
           >
             <Menu className="w-6 h-6" />
