@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { getHighQualityImageUrl } from "@/lib/utils";
 
 export default function AboutHero() {
   const containerVariants = {
@@ -36,7 +37,7 @@ export default function AboutHero() {
         transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP_eJva_wnO8zv_mqn_fRljINWZ_BEf0iwS0qNIKYLP_eChzAoeBehaTRZLFnBsE1iMhBzO6nDM-STpZTIPQrDm7sZ-tWJFRn10z0jMO4xymYxTvnXf0GHb4uSfEGqEpw0LOGjNGLk3kuehvcl6OU49IPXSGWOvCYnu1WFNuUTCqsvilqX_9E6WEWhRuILzAWpahoake3N8AksLM8mjYQGYc1xPsC5cKTQNEa50uPZPZtL_0SlxseLOw')",
+          backgroundImage: `url('${getHighQualityImageUrl("https://lh3.googleusercontent.com/aida-public/AB6AXuCP_eJva_wnO8zv_mqn_fRljINWZ_BEf0iwS0qNIKYLP_eChzAoeBehaTRZLFnBsE1iMhBzO6nDM-STpZTIPQrDm7sZ-tWJFRn10z0jMO4xymYxTvnXf0GHb4uSfEGqEpw0LOGjNGLk3kuehvcl6OU49IPXSGWOvCYnu1WFNuUTCqsvilqX_9E6WEWhRuILzAWpahoake3N8AksLM8mjYQGYc1xPsC5cKTQNEa50uPZPZtL_0SlxseLOw", 1920)}')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 to-transparent" />

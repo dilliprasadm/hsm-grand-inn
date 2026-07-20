@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Phone, MessageSquare } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants/site";
+import PremiumImage from "@/components/shared/PremiumImage";
 
 export default function AboutCTA() {
   return (
@@ -18,10 +19,12 @@ export default function AboutCTA() {
         >
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
-            <img
+            <PremiumImage
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgbzJWkbqLsGkAyMJDgcQ-rRsOlmmoc1Q36jJUjnSY5ASoLaVqDyPLZ5uBefF4YgL3RLrzn2-dETuVcxPLlavOtuKGGzjR4UEx4hNqvF6H4Nsgu5906-jMHEmxojlsqb-9Tm1MGpxLVQ4Y717yLvshaGgSW9tnAMSHWaTUyrLOgNMB-fkWtdd2W2hIwLNEM8iKe1aVmqIf5RWcm5bODfnXU5uk0OVf5cPRLE0tF-DH2rjVVVT-6N7yyg"
               alt="HSM Grand Inn Exterior Entrance"
-              className="w-full h-full object-cover"
+              width={1600}
+              height={900}
+              className="w-full h-full object-cover animate-none"
             />
             <div className="absolute inset-0 bg-primary/80 backdrop-blur-sm" />
           </div>

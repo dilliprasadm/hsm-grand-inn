@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, MessageSquare, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants/site";
+import { getHighQualityImageUrl } from "@/lib/utils";
 
 export default function Hero() {
   const containerVariants = {
@@ -38,7 +39,7 @@ export default function Hero() {
         transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBlsnn5RIo5dqFJoBf1XIFNm_YTJJkGoq37SFJE1lzvOVlqCY5Xae8Mk-nc6WSyUfHPz6zZI-BVbmV70gYkkQejMDVNMfMNinInwrW1ilZknXaBql6_q7Hqd8oLNzRAq9XpnO3WiTJ_sVGDHj-wJuQGksD4aCJtZcVQManA-RPZqwdCvVUyws0xrK9DjBDo1FWfdZOp2XGAhiFaCqKt-4Jl2l07NpifaS6GtIvJSuY8JoZ6T3zy29Oag')",
+          backgroundImage: `url('${getHighQualityImageUrl("https://lh3.googleusercontent.com/aida-public/AB6AXuDBlsnn5RIo5dqFJoBf1XIFNm_YTJJkGoq37SFJE1lzvOVlqCY5Xae8Mk-nc6WSyUfHPz6zZI-BVbmV70gYkkQejMDVNMfMNinInwrW1ilZknXaBql6_q7Hqd8oLNzRAq9XpnO3WiTJ_sVGDHj-wJuQGksD4aCJtZcVQManA-RPZqwdCvVUyws0xrK9DjBDo1FWfdZOp2XGAhiFaCqKt-4Jl2l07NpifaS6GtIvJSuY8JoZ6T3zy29Oag", 1920)}')`,
         }}
       >
         <div className="absolute inset-0 bg-black/45" />
