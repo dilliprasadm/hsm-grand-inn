@@ -15,7 +15,7 @@ export default function AboutCTA() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full rounded-[32px] md:rounded-[40px] overflow-hidden py-24 px-8 md:px-12 text-center text-white luxury-shadow"
+          className="relative w-full bg-primary rounded-[32px] md:rounded-[40px] overflow-hidden py-24 px-8 md:px-12 text-center text-white luxury-shadow"
         >
           {/* Background Image */}
           <div className="absolute inset-0 -z-10">
