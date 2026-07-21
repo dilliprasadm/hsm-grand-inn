@@ -34,7 +34,7 @@ export default function AboutReviews() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative italic"
         >
-          <Quote className="w-24 h-24 absolute -top-12 -left-10 text-secondary/10 pointer-events-none" />
+          <Quote className="w-24 h-24 absolute -top-12 md:-left-10 -left-2 text-secondary/10 pointer-events-none" />
           <blockquote className="font-serif text-2xl md:text-4xl text-primary leading-snug font-bold select-none relative z-10">
             &ldquo;From the moment we arrived, the service was impeccable. The rooms are incredibly clean, modern, and provide a level of comfort that's hard to find. It truly is the best hotel in Chittoor.&rdquo;
           </blockquote>

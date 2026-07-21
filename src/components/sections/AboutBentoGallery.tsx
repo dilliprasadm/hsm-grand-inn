@@ -46,7 +46,7 @@ export default function AboutBentoGallery() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto h-64 md:h-auto luxury-shadow"
+            className="rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto luxury-shadow"
           >
             <PremiumImage
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZLac-iXN6zaIRnXaUU7pDJekxsYrDB6oWu8XqMYr7auDae-c7wxgAfDQUHYMCcJvm21_mskH0DZdR9ZeSzAHrOeDoQ_SLB51x3UNS-kwJwo2ZK73Xsdq6NOVtSPOlz8H31e8OXKdQMjho7_7gGVxq8AW4ClisG3_ZdgRV9VKmDxmxURJ3sZEtVCciNFOVdFDpEHMCoWFE7lx10WGyacz1bjS-FuR6WAKwwP0vbZeAW3EU6o5sEjDVAg"
@@ -64,7 +64,7 @@ export default function AboutBentoGallery() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto h-64 md:h-auto luxury-shadow"
+            className="rounded-2xl overflow-hidden aspect-[4/3] md:aspect-auto luxury-shadow"
           >
             <PremiumImage
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz1BXxhhNlSP83s8JafBaYSt-14I6jsGqnGvBnwtf_wTqQFczdDPMs2XKA32h2jqv8eMUOymPRM-zaHqHxz7Gpvyx2G0-VoQVW_1BMFTw-IAm74afZeDS5y4UA0qVVFbsrxa5-usj3mAYs4B0ntXM_o8LURjTN-9bmX4G-uoApSTaoxNiY3BvJ72QH5Dnj4rT1-GUdWYDbtq--cyCPcfQ_7KIMt62MrgGjumjY7thWlWOXBgpaYRKsyg"
@@ -82,7 +82,7 @@ export default function AboutBentoGallery() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="md:col-span-2 rounded-2xl overflow-hidden aspect-[2/1] md:aspect-auto h-64 md:h-auto luxury-shadow"
+            className="md:col-span-2 rounded-2xl overflow-hidden aspect-[2/1] md:aspect-auto luxury-shadow"
           >
             <PremiumImage
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCddJBVnimgdFLXMCiaB170a21fsGkq289qBv-RONl186YvfPGz8vLvXPEp8P465-f95KZXezuKy7p1ypp4iFnUl4lpgVo6yzEZDZ7p0sPW8zesmo3AMcMy7V2yBkzLvo6sOoUmQ610TuZX4unI73z0hkCsY8AEgKqKkKm_dEtwQdIMVI94uF8GgM1BqbXVdFsh-nMxmXnn49PeF1RvAoIgoDrD3n5YoPDD8KdXYmgob0177GGbSkf3zw"
